@@ -1,0 +1,105 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Get a free hosted Postgres database in seconds: `npx create-db`
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  ADMIN
+  TEACHER
+}
+
+enum UserStatus {
+  ACTIVE
+  DISABLED
+}
+
+enum Gender {
+  MALE
+  FEMALE
+}
+
+enum StudentStatus {
+  ACTIVE
+  INACTIVE
+  GRADUATED
+}
+
+model User {
+  id             Int          @id @default(autoincrement())
+  username       String       @unique
+  passwordHash   String
+  name           String
+  role           Role
+  status         UserStatus   @default(ACTIVE)
+  headedClasses  Class[]      @relation("HeadTeacherClasses")
+  teachingCourses Course[]    @relation("TeacherCourses")
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+}
+
+model Class {
+  id            Int       @id @default(autoincrement())
+  name          String
+  gradeYear     Int
+  description   String?
+  headTeacherId Int?
+  headTeacher   User?     @relation("HeadTeacherClasses", fields: [headTeacherId], references: [id])
+  students      Student[]
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+}
+
+model Student {
+  id         Int           @id @default(autoincrement())
+  studentNo  String        @unique
+  name       String
+  gender     Gender
+  phone      String?
+  email      String?
+  enrollYear Int
+  status     StudentStatus @default(ACTIVE)
+  remark     String?
+  classId    Int
+  class      Class         @relation(fields: [classId], references: [id])
+  grades     Grade[]
+  createdAt  DateTime      @default(now())
+  updatedAt  DateTime      @updatedAt
+}
+
+model Course {
+  id          Int       @id @default(autoincrement())
+  name        String
+  code        String    @unique
+  credit      Int
+  description String?
+  teacherId   Int?
+  teacher     User?     @relation("TeacherCourses", fields: [teacherId], references: [id])
+  grades      Grade[]
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}
+
+model Grade {
+  id         Int      @id @default(autoincrement())
+  semester   String
+  usualScore Float
+  examScore  Float
+  totalScore Float
+  studentId  Int
+  courseId   Int
+  student    Student  @relation(fields: [studentId], references: [id])
+  course     Course   @relation(fields: [courseId], references: [id])
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@unique([studentId, courseId, semester])
+}
