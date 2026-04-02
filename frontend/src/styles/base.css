@@ -1,6 +1,11 @@
 :root {
   font-family: 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif;
   color: #1f2937;
+  --brand-green: #16a34a;
+  --brand-green-hover: #15803d;
+  --brand-green-active: #166534;
+  --brand-green-soft: #f0fdf4;
+  --brand-green-border: #86efac;
   background:
     radial-gradient(circle at top left, rgba(33, 150, 243, 0.18), transparent 28%),
     radial-gradient(circle at bottom right, rgba(16, 185, 129, 0.18), transparent 32%),
@@ -8,6 +13,13 @@
   line-height: 1.5;
   font-weight: 400;
   color-scheme: light;
+  --el-color-primary: var(--brand-green);
+  --el-color-primary-light-3: #4ade80;
+  --el-color-primary-light-5: #86efac;
+  --el-color-primary-light-7: #bbf7d0;
+  --el-color-primary-light-8: #dcfce7;
+  --el-color-primary-light-9: var(--brand-green-soft);
+  --el-color-primary-dark-2: var(--brand-green-active);
 }
 
 * {
@@ -81,4 +93,53 @@ a {
   display: flex;
   justify-content: flex-end;
   margin-top: 18px;
+}
+
+.el-button {
+  --el-button-bg-color: var(--brand-green);
+  --el-button-border-color: var(--brand-green);
+  --el-button-text-color: #ffffff;
+  --el-button-hover-bg-color: var(--brand-green-hover);
+  --el-button-hover-border-color: var(--brand-green-hover);
+  --el-button-hover-text-color: #ffffff;
+  --el-button-active-bg-color: var(--brand-green-active);
+  --el-button-active-border-color: var(--brand-green-active);
+  --el-button-active-text-color: #ffffff;
+  --el-button-disabled-bg-color: #bbf7d0;
+  --el-button-disabled-border-color: #bbf7d0;
+  --el-button-disabled-text-color: #f0fdf4;
+}
+
+.el-button.is-plain {
+  --el-button-bg-color: var(--brand-green-soft);
+  --el-button-border-color: var(--brand-green-border);
+  --el-button-text-color: var(--brand-green);
+  --el-button-hover-bg-color: var(--brand-green);
+  --el-button-hover-border-color: var(--brand-green);
+  --el-button-hover-text-color: #ffffff;
+}
+
+.el-button.is-link,
+.el-button--text {
+  --el-button-bg-color: transparent;
+  --el-button-border-color: transparent;
+  --el-button-text-color: var(--brand-green);
+  --el-button-hover-text-color: var(--brand-green-hover);
+  --el-button-active-text-color: var(--brand-green-active);
+}
+
+.el-button--primary,
+.el-button--success,
+.el-button--warning,
+.el-button--danger,
+.el-button--info {
+  --el-button-bg-color: var(--brand-green);
+  --el-button-border-color: var(--brand-green);
+  --el-button-text-color: #ffffff;
+  --el-button-hover-bg-color: var(--brand-green-hover);
+  --el-button-hover-border-color: var(--brand-green-hover);
+  --el-button-hover-text-color: #ffffff;
+  --el-button-active-bg-color: var(--brand-green-active);
+  --el-button-active-border-color: var(--brand-green-active);
+  --el-button-active-text-color: #ffffff;
 }
