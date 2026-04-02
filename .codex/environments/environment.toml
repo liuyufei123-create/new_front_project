@@ -8,4 +8,8 @@ script = ""
 [[actions]]
 name = "运行"
 icon = "run"
-command = "npm run dev"
+command = '''
+cd frontend
+npm i
+npm run dev
+'''
