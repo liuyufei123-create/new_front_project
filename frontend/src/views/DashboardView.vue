@@ -39,30 +39,20 @@ const loadData = async () => {
 }
 
 const classOption = computed<EChartsOption>(() => ({
-  tooltip: { trigger: 'item' },
-  legend: {
-    bottom: 0,
-    left: 'center',
+  tooltip: { trigger: 'axis' },
+  xAxis: {
+    type: 'category',
+    data: classDistribution.value.map((item) => item.className),
+    axisLabel: { interval: 0, rotate: 15 },
   },
+  yAxis: { type: 'value' },
   series: [
     {
-      name: '班级学生分布',
-      type: 'pie',
-      radius: ['42%', '72%'],
-      center: ['50%', '44%'],
-      itemStyle: {
-        borderRadius: 10,
-        borderColor: '#fff',
-        borderWidth: 3,
-      },
-      label: {
-        formatter: '{b}\n{d}%',
-      },
-      data: classDistribution.value.map((item) => ({
-        name: item.className,
-        value: item.studentCount,
-      })),
-      color: ['#0ea5e9', '#10b981', '#8b5cf6', '#f59e0b', '#ef4444', '#14b8a6'],
+      name: 'Class Distribution',
+      type: 'bar',
+      data: classDistribution.value.map((item) => item.studentCount),
+      itemStyle: { color: '#0ea5e9' },
+      barWidth: 36,
     },
   ],
 }))
@@ -88,27 +78,22 @@ const averageOption = computed<EChartsOption>(() => ({
 
 const passOption = computed<EChartsOption>(() => ({
   tooltip: {
-    trigger: 'item',
+    trigger: 'axis',
     valueFormatter: (value) => `${value}%`,
   },
-  legend: {
-    bottom: 0,
-    left: 'center',
+  xAxis: {
+    type: 'category',
+    data: passRate.value.map((item) => item.courseName),
+    axisLabel: { interval: 0, rotate: 15 },
   },
+  yAxis: { type: 'value', max: 100 },
   series: [
     {
-      name: '课程及格率',
-      type: 'pie',
-      radius: '70%',
-      center: ['50%', '44%'],
-      label: {
-        formatter: '{b}\n{c}%',
-      },
-      data: passRate.value.map((item) => ({
-        name: item.courseName,
-        value: item.passRate,
-      })),
-      color: ['#f59e0b', '#fb7185', '#34d399', '#38bdf8', '#a78bfa', '#f97316'],
+      name: 'Pass Rate',
+      type: 'bar',
+      data: passRate.value.map((item) => item.passRate),
+      itemStyle: { color: '#f59e0b' },
+      barWidth: 36,
     },
   ],
 }))
